@@ -27,21 +27,21 @@ export default function Navbar({ activePage, setActivePage, onOpenRFQ }) {
           {/* Logo / Brand Name */}
           <div 
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-3 cursor-pointer select-none group"
+            className="flex items-center gap-3 cursor-pointer select-none group shrink-0"
           >
-            <div className="w-11 h-11 rounded-lg bg-navy-900 flex items-center justify-center text-amber-400 shadow-md group-hover:bg-navy-800 transition-colors">
+            <div className="w-11 h-11 rounded-lg bg-navy-900 flex items-center justify-center text-amber-400 shadow-md group-hover:bg-navy-800 transition-colors shrink-0">
               <Globe className="w-6 h-6 animate-pulse" />
             </div>
-            <div>
+            <div className="whitespace-nowrap">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-extrabold tracking-tight text-navy-900 font-display">
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-navy-900 font-display">
                   CR GLOBAL
                 </span>
                 <span className="text-xs font-bold text-amber-600 tracking-widest uppercase">
                   EXIM
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium tracking-tight">
+              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium tracking-tight">
                 Indian Merchant Exporter & Processor
               </p>
             </div>
