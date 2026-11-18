@@ -1,140 +1,132 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
-import CategoryFilter from '../components/products/CategoryFilter';
-import ProductCard from '../components/products/ProductCard';
-import ProductDetailModal from '../components/products/ProductDetailModal';
-import ContainerCalculator from '../components/products/ContainerCalculator';
-import { products } from '../data/products';
-import { FileText, Download } from 'lucide-react';
+import Button from '../components/common/Button';
+import SEO from '../components/common/SEO';
+import { Sprout, ArrowRight, Check, Package, Sparkles } from 'lucide-react';
 
-export default function ProductsPage({
-  setActivePage,
-  onOpenRFQ,
-  selectedCategory,
-  setSelectedCategory,
-  onOpenRFQWithProduct
-}) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeModalProduct, setActiveModalProduct] = useState(null);
-
-  // Filter products by category and search query
-  const filteredProducts = products.filter((p) => {
-    const matchesCategory =
-      !selectedCategory || selectedCategory === 'all' || p.category === selectedCategory;
-
-    const matchesSearch =
-      !searchQuery ||
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.botanicalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.hsCode.includes(searchQuery) ||
-      p.origin.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchesCategory && matchesSearch;
-  });
-
-  const handleEnquire = (prod) => {
-    if (onOpenRFQWithProduct) {
-      onOpenRFQWithProduct(prod);
-    } else {
-      onOpenRFQ();
-    }
-  };
-
+export default function ProductsPage() {
   return (
-    <div className="bg-white min-h-screen">
-      {/* Page Header */}
-      <PageHeader
-        title="Agro-Commodities & Export Products Catalog"
-        subtitle="Sortex cleaned, laboratory verified, and export-packaged whole spices, Basmati rice, oilseeds, pulses, and specialty food ingredients."
-        breadcrumb="Products Catalog"
-        onNavHome={() => setActivePage('home')}
+    <div className="space-y-16 pb-16">
+      <SEO
+        title="Products Portfolio | CR Global — Indian Organic Fertilizer Sourcing"
+        description="Explore Indian vermicompost and organic fertilizer sourcing portfolios for international B2B agricultural and commercial buyers."
+        canonicalPath="/products"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
+      <PageHeader
+        title="Products Portfolio"
+        subtitle="Sourcing premium organic agricultural inputs and fertilizers directly from Indian processing hubs for global distribution."
+        breadcrumb="Products"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        {/* Category & Search Filter Bar */}
-        <CategoryFilter
-          selectedCategory={selectedCategory || 'all'}
-          onSelectCategory={(catId) => setSelectedCategory(catId)}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          totalCount={products.length}
-          filteredCount={filteredProducts.length}
-        />
+        {/* Flagship Product Showcase: Vermicompost */}
+        <section className="bg-ivory-50/80 rounded-3xl border border-ivory-200 p-8 sm:p-12 lg:p-14 shadow-card">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest-800 text-gold-400 text-xs font-semibold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Flagship Export Product</span>
+              </div>
 
-        {/* Product Cards Grid */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onViewDetails={(prod) => setActiveModalProduct(prod)}
-                onEnquire={handleEnquire}
-              />
-            ))}
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-forest-800 font-display">
+                Pure Organic Vermicompost
+              </h2>
+
+              <p className="text-charcoal-700 leading-relaxed text-sm sm:text-base">
+                Bio-converted organic matter produced through controlled earthworm cultivation. Rich in bio-available NPK, micronutrients, beneficial microbial flora, and natural plant growth hormones.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="flex items-center gap-2 text-sm text-charcoal-800">
+                  <Check className="w-4 h-4 text-forest-800 shrink-0" />
+                  <span>100% Organic & Non-Toxic</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-charcoal-800">
+                  <Check className="w-4 h-4 text-forest-800 shrink-0" />
+                  <span>Optimal Moisture & Screened Granules</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-charcoal-800">
+                  <Check className="w-4 h-4 text-forest-800 shrink-0" />
+                  <span>High Humic Acid & Microbial Density</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-charcoal-800">
+                  <Check className="w-4 h-4 text-forest-800 shrink-0" />
+                  <span>Available in 25kg, 50kg & 1MT Jumbo Bags</span>
+                </div>
+              </div>
+
+              <div className="pt-4 flex flex-wrap items-center gap-4">
+                <Button to="/products/vermicompost" variant="primary">
+                  <span>Detailed Specifications & Grades</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+                <Button to="/export-enquiries" variant="gold">
+                  <span>Request Bulk Quote</span>
+                </Button>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border border-ivory-200/90 shadow-sm space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-forest-800 text-gold-500 flex items-center justify-center">
+                <Package className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-forest-800 font-display">
+                Bulk Export Packaging
+              </h3>
+              <p className="text-xs text-charcoal-600 leading-relaxed">
+                Packaged to maintain biological integrity during container ocean transit. We offer export-grade HDPE/PP laminated bags, bulk FIBC jumbo sacks, and customized buyer branding.
+              </p>
+              <div className="pt-2 border-t border-ivory-200 text-xs text-charcoal-500">
+                Container Stuffing: 20ft & 40ft FCL options available.
+              </div>
+            </div>
+
           </div>
-        ) : (
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-12 text-center space-y-4">
-            <h3 className="text-lg font-bold text-navy-900">No commodities matched your criteria</h3>
-            <p className="text-xs text-slate-500 max-w-md mx-auto">
-              We supply custom agro-commodities beyond this catalog. Submit an RFQ with your desired commodity and HS code.
+        </section>
+
+        {/* Future Expansion Vertical Preview */}
+        <section className="border-t border-ivory-200 pt-12">
+          <div className="max-w-2xl mb-8">
+            <h3 className="text-2xl font-bold text-forest-800 font-display">
+              Portfolio Roadmap & Expansion Verticals
+            </h3>
+            <p className="text-sm text-charcoal-600 mt-2 leading-relaxed">
+              In line with our mission of creating enduring value, CR Global is selectively developing supply channels for additional sustainable agricultural inputs.
             </p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('all');
-              }}
-              className="bg-navy-900 text-amber-400 font-bold px-5 py-2.5 rounded-xl text-xs"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
-
-        {/* Interactive Ocean Freight Container Calculator */}
-        <div className="pt-6">
-          <ContainerCalculator
-            onOpenRFQWithData={(data) => {
-              const matchedProd = products.find(p => p.name === data.productName);
-              if (onOpenRFQWithProduct) {
-                onOpenRFQWithProduct(matchedProd, data.containerType);
-              } else {
-                onOpenRFQ();
-              }
-            }}
-          />
-        </div>
-
-        {/* Catalog Download Notice Strip */}
-        <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left">
-            <h4 className="text-sm font-bold text-navy-900">Need Our Complete Product Specification Sheet (PDF)?</h4>
-            <p className="text-xs text-slate-500 mt-0.5">Includes full crop calendar, chemical analysis tolerances, and container stuffing matrices.</p>
           </div>
 
-          <button
-            onClick={() => onOpenRFQ()}
-            className="bg-white hover:bg-slate-100 text-navy-900 font-bold px-5 py-2.5 rounded-xl text-xs border border-slate-300 shadow-2xs flex items-center gap-2 transition-colors shrink-0"
-          >
-            <FileText className="w-4 h-4 text-amber-600" />
-            <span>Request Technical Specification PDF</span>
-          </button>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-2xl border border-dashed border-ivory-300 bg-ivory-50/50">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2.5 py-1 rounded-md">
+                In Development
+              </span>
+              <h4 className="text-lg font-bold text-forest-800 mt-3 font-display">
+                Specialized Organic Soil Conditioners
+              </h4>
+              <p className="text-xs text-charcoal-600 mt-1 leading-relaxed">
+                Enhanced bio-char and microbial inoculants for dry-land reclamation and commercial horticulture.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl border border-dashed border-ivory-300 bg-ivory-50/50">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gold-600 bg-gold-500/10 px-2.5 py-1 rounded-md">
+                In Development
+              </span>
+              <h4 className="text-lg font-bold text-forest-800 mt-3 font-display">
+                Custom Liquid Bio-Extracts & Enrichers
+              </h4>
+              <p className="text-xs text-charcoal-600 mt-1 leading-relaxed">
+                Concentrated organic formulations for precision fertigation and large-scale drip irrigation systems.
+              </p>
+            </div>
+          </div>
+        </section>
 
       </div>
-
-      {/* Product Detail Modal */}
-      <ProductDetailModal
-        product={activeModalProduct}
-        isOpen={!!activeModalProduct}
-        onClose={() => setActiveModalProduct(null)}
-        onEnquire={(prod) => {
-          setActiveModalProduct(null);
-          handleEnquire(prod);
-        }}
-      />
     </div>
   );
 }

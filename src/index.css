@@ -9,52 +9,36 @@
   }
   
   body {
-    @apply bg-white text-slate-800 antialiased font-sans;
+    @apply bg-white text-charcoal-800 antialiased font-sans selection:bg-forest-800 selection:text-ivory-100;
   }
 }
 
-/* Custom modern scrollbar */
+/* Custom refined scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #F4F1E8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: #B58B52;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #183D30;
 }
 
-/* Marquee infinite animation */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  display: flex;
-  width: 200%;
-  animation: marquee 25s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
-/* Subtle glow and badge styling */
+/* Subtle glass panel */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .badge-tag {
-  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider;
+  @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider;
 }

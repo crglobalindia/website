@@ -1,213 +1,667 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
-import RFQForm from '../components/rfq/RFQForm';
-import { Mail, Phone, MapPin, Clock, MessageCircle, ShieldCheck, ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+import Button from '../components/common/Button';
+import SEO from '../components/common/SEO';
+import { 
+  Mail, 
+  Phone,
+  MapPin, 
+  Clock, 
+  Send, 
+  CheckCircle2, 
+  AlertCircle, 
+  ShieldCheck, 
+  ArrowRight, 
+  MessageSquare, 
+  FileText, 
+  ExternalLink,
+  Loader2,
+  Building2,
+  Globe2
+} from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
 
-export default function ContactPage({ setActivePage, initialProduct = null, initialContainer = null }) {
-  const [openFaq, setOpenFaq] = useState(0);
-
-  const faqs = [
-    {
-      q: "What is your commercial sample policy?",
-      a: "We provide free commercial product samples (up to 500g per commodity) accompanied by our internal certificate of analysis (COA). International buyers provide their DHL, FedEx, or Aramex account number to cover the courier freight charges."
-    },
-    {
-      q: "Which Incoterms do you support for international shipments?",
-      a: "We routinely quote on FOB (Mundra Port or Nhava Sheva JNPT Port) and CIF (Cost, Insurance & Freight to your designated port of discharge). We also support CFR and EXW upon request."
-    },
-    {
-      q: "What are your standard payment terms for new buyers?",
-      a: "Our standard export payment terms are: (1) 100% Irrevocable Confirmed Letter of Credit (L/C) at sight issued by a prime international bank, or (2) 30% Advance Deposit via Telegraphic Transfer (T/T) with the remaining 70% payable against scanned copies of the original Bill of Lading (BL) and third-party inspection certificates."
-    },
-    {
-      q: "Can you provide SGS or Geo-Chem third-party inspection certificates?",
-      a: "Yes. Third-party pre-shipment inspection by SGS, Geo-Chem, Intertek, or Cotecna can be arranged for any container. Surveyors draw composite samples, verify gross/net weights, supervise container stuffing, and apply customs security seals."
-    },
-    {
-      q: "Do you offer private OEM branding and customized consumer retail packaging?",
-      a: "Yes. We offer complete OEM private labeling for supermarket chains and distributors, including branded BOPP bags, pouches, zipper stand-up bags, and master cartons printed with your logos, barcodes, and destination-country regulatory markings."
+export default function ContactPage() {
+  // Page SEO metadata
+  useEffect(() => {
+    document.title = "Contact CR Global | Vermicompost & Organic Fertilizer Enquiries";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        "content",
+        "Contact CR Global for international B2B sourcing discussions on Indian vermicompost and organic fertilizers. Discuss specifications and trade feasibility."
+      );
     }
-  ];
+  }, []);
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    companyName: '',
+    email: '',
+    country: '',
+    subject: '',
+    message: '',
+    privacyConsent: false,
+    website_url: '' // Honeypot spam defense
+  });
+
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error | setup_required
+  const [errorMessage, setErrorMessage] = useState('');
+  const [lastSubmitTime, setLastSubmitTime] = useState(0);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required.";
+    }
+
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = "Company name is required.";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.country.trim()) {
+      newErrors.country = "Country is required.";
+    }
+
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Subject is required.";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required.";
+    }
+
+    if (!formData.privacyConsent) {
+      newErrors.privacyConsent = "Please acknowledge consent to process your enquiry.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastSubmitTime < 10000) {
+      setStatus('error');
+      setErrorMessage('Please wait a few moments before resubmitting.');
+      return;
+    }
+
+    // Bot honeypot check
+    if (formData.website_url) {
+      setStatus('success');
+      return;
+    }
+
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const payload = {
+        contactPerson: formData.fullName,
+        companyName: formData.companyName,
+        email: formData.email,
+        country: formData.country,
+        product: formData.subject,
+        quantity: 1, // positive dummy for general inquiry validator
+        notes: formData.message,
+        privacyConsent: formData.privacyConsent,
+        website_url: formData.website_url
+      };
+
+      const response = await fetch('/api/send-enquiry.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success) {
+        setStatus('success');
+        setLastSubmitTime(now);
+      } else {
+        setStatus('setup_required');
+        setErrorMessage(
+          result?.error || 'Server-side transmission is in setup mode on this environment.'
+        );
+      }
+    } catch (err) {
+      setStatus('setup_required');
+      setErrorMessage('Server-side endpoint is pending Hostinger deployment.');
+    }
+  };
+
+  const generateMailtoLink = () => {
+    const subject = encodeURIComponent(`General Business Enquiry: ${formData.subject} - ${formData.companyName}`);
+    const bodyText = `CR Global Contact Enquiry\n\n` +
+      `Full Name: ${formData.fullName}\n` +
+      `Company Name: ${formData.companyName}\n` +
+      `Email: ${formData.email}\n` +
+      `Country: ${formData.country}\n` +
+      `Subject: ${formData.subject}\n\n` +
+      `Message:\n${formData.message}\n`;
+
+    return `mailto:info@crglobalindia.com?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+  };
+
+  const scrollToForm = () => {
+    const el = document.getElementById('contact-form');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const hasVerifiedWhatsApp = Boolean(siteConfig.contact?.whatsappNumber);
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* Page Header */}
+    <div className="space-y-16 sm:space-y-24 pb-20">
+      <SEO 
+        title="Contact CR Global | Vermicompost & Organic Fertilizer Enquiries"
+        description="Contact CR Global for international B2B sourcing discussions on Indian vermicompost and organic fertilizers. Discuss specifications and trade feasibility."
+        canonicalPath="/contact"
+      />
+      
+      {/* PAGE HEADER */}
       <PageHeader
-        title="Contact Our Commercial Export Desk & RFQ"
-        subtitle="Request official FOB / CIF export quotations, request certified product samples, or schedule an audit of our Mundra processing facility."
-        breadcrumb="Contact & RFQ"
-        onNavHome={() => setActivePage('home')}
+        title="Contact CR Global"
+        subtitle="Let's Discuss Your Sourcing Requirements"
+        breadcrumb="Contact"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
-        
-        {/* Contact Info Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Card 1: Headquarters */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-navy-900 text-amber-400 flex items-center justify-center">
-              <MapPin className="w-5 h-5" />
+      {/* INTRO & CONTACT OPTIONS BUTTONS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="bg-ivory-100/60 rounded-3xl border border-ivory-200/90 p-8 sm:p-12 lg:p-14 shadow-subtle">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest-800 text-gold-400 text-xs font-bold uppercase tracking-wider">
+              <span>Open Dialogue</span>
             </div>
-            <div>
-              <h4 className="text-base font-bold text-navy-900 font-display">Corporate Headquarters</h4>
-              <p className="text-xs text-slate-500 font-mono mt-0.5">Ahmedabad, Gujarat, India</p>
-            </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {siteConfig.contact.headOffice.addressLine1}, {siteConfig.contact.headOffice.addressLine2}, {siteConfig.contact.headOffice.city} - {siteConfig.contact.headOffice.postalCode}, Gujarat, India
+
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-forest-800 font-display">
+              Direct B2B Communication
+            </h2>
+
+            <p className="text-base sm:text-lg text-charcoal-700 leading-relaxed font-normal">
+              Whether you are an international importer, agricultural distributor, fertilizer supplier or prospective business partner, we welcome your enquiry.
             </p>
-            <div className="text-[11px] text-slate-500 pt-2 border-t border-slate-200 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{siteConfig.contact.headOffice.operatingHours}</span>
-            </div>
-          </div>
 
-          {/* Card 2: Mundra Terminal */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="text-base font-bold text-navy-900 font-display">Mundra Processing Terminal</h4>
-              <p className="text-xs text-slate-500 font-mono mt-0.5">Gandhidham / Mundra Port Belt</p>
-            </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              {siteConfig.contact.warehouseLogisticsHub.addressLine1}, {siteConfig.contact.warehouseLogisticsHub.addressLine2}, {siteConfig.contact.warehouseLogisticsHub.city} - {siteConfig.contact.warehouseLogisticsHub.postalCode}, Gujarat, India
-            </p>
-            <div className="text-[11px] text-amber-800 font-medium pt-2 border-t border-slate-200">
-              {siteConfig.contact.warehouseLogisticsHub.proximityNote}
-            </div>
-          </div>
+            {/* Contact Action Options */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              <Button onClick={scrollToForm} variant="primary" size="md">
+                <MessageSquare className="w-4 h-4" />
+                <span>Send an Enquiry</span>
+              </Button>
 
-          {/* Card 3: Direct Connect */}
-          <div className="bg-navy-950 text-white rounded-2xl p-6 space-y-4 border border-navy-800">
-            <div>
-              <span className="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider block">
-                COMMERCIAL HOTLINE
-              </span>
-              <h4 className="text-lg font-bold text-white font-display mt-0.5">
-                Instant Export Inquiry
-              </h4>
-            </div>
+              <Button to="/export-enquiries" variant="gold" size="md">
+                <FileText className="w-4 h-4" />
+                <span>Request a Bulk Quote</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
 
-            <div className="space-y-2 text-xs">
-              <a
-                href={`tel:${siteConfig.contact.primaryPhone.replace(/\s+/g, '')}`}
-                className="flex items-center gap-2 text-slate-200 hover:text-amber-400 transition-colors"
-              >
-                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>{siteConfig.contact.phoneDisplay}</span>
-              </a>
-
-              <a
-                href={`mailto:${siteConfig.contact.emails.inquiry}`}
-                className="flex items-center gap-2 text-slate-200 hover:text-amber-400 transition-colors"
-              >
-                <Mail className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{siteConfig.contact.emails.inquiry}</span>
-              </a>
-            </div>
-
-            <div className="pt-2">
-              <a
-                href={`https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(siteConfig.contact.whatsappDefaultMessage)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-colors shadow-sm"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Chat with Export Director</span>
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Full B2B RFQ Form */}
-        <div>
-          <RFQForm
-            initialProduct={initialProduct}
-            initialContainer={initialContainer}
-          />
-        </div>
-
-        {/* Interactive Google Map / Location Embed Placeholder */}
-        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-amber-600" />
-              <h4 className="text-sm font-bold text-navy-900 uppercase font-mono tracking-wider">
-                Strategic Location: Gujarat Trade & Seaport Corridor
-              </h4>
-            </div>
-            <span className="text-xs text-slate-500 font-mono">23.0225° N, 72.5714° E</span>
-          </div>
-
-          <div className="relative h-64 sm:h-80 w-full rounded-xl bg-gradient-to-br from-navy-950 via-slate-900 to-navy-900 border border-navy-800 flex items-center justify-center p-6 text-center text-white overflow-hidden">
-            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:20px_20px]" />
-            
-            <div className="relative z-10 max-w-md space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <h5 className="text-lg font-bold font-display">
-                Gujarat, India: Global Trade Crossroads
-              </h5>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Seamless multi-modal transit linking primary agricultural production mandis (Unjha, Saurashtra, Gondal) directly to Mundra Port & Kandla Port for fast container loading.
-              </p>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-800 text-xs font-mono text-emerald-400 border border-navy-700">
-                <span>Facility Audits Welcomed by Appointment</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* B2B EXIM FAQ Section */}
-        <div className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-1.5 text-amber-600 font-mono text-xs font-bold uppercase tracking-widest mb-1">
-              <HelpCircle className="w-4 h-4" />
-              <span>COMMONLY ASKED QUESTIONS</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-navy-900 font-display">
-              Export Terms, Logistics & Sample Clearance
-            </h3>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-2xs transition-all"
+              {hasVerifiedWhatsApp && (
+                <a
+                  href={`https://wa.me/${siteConfig.contact.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center font-semibold rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-white text-sm px-5 py-2.5 gap-2 shadow-sm transition-all"
                 >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                    className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-navy-900 hover:text-amber-600 transition-colors"
-                  >
-                    <span>{faq.q}</span>
-                    {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-amber-600 shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-                    )}
-                  </button>
+                  <span>Chat on WhatsApp</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  {isOpen && (
-                    <div className="p-4 sm:p-5 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
-                      {faq.a}
+      {/* MAIN CONTENT: CONTACT DETAILS & FORM */}
+      <section id="contact-form" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          
+          {/* Column 1: Verified Contact Information Card (Span 5) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-forest-900 text-ivory-100 rounded-3xl p-8 sm:p-10 border border-forest-800 shadow-card space-y-7">
+              
+              <div className="space-y-2 border-b border-forest-800 pb-5">
+                <span className="text-xs font-bold uppercase tracking-widest text-gold-400">
+                  Company Identity
+                </span>
+                <h3 className="text-2xl font-extrabold text-white font-display">
+                  {siteConfig.company.name}
+                </h3>
+                <p className="text-xs text-gold-400 font-medium">
+                  {siteConfig.company.tagline}
+                </p>
+                <p className="text-xs text-ivory-200/80 pt-1">
+                  India-Based B2B Sourcing & International Trade
+                </p>
+              </div>
+
+              {/* Verified Contact Details Only */}
+              <div className="space-y-5 text-sm">
+                
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Official Sourcing Desk</div>
+                    <a 
+                      href={`mailto:${siteConfig.contact.inquiriesEmail}`}
+                      className="text-ivory-100 hover:text-gold-300 font-medium text-sm transition-colors block mt-0.5"
+                    >
+                      {siteConfig.contact.inquiriesEmail}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">General Inquiries</div>
+                    <a 
+                      href={`mailto:${siteConfig.contact.email}`}
+                      className="text-ivory-100 hover:text-gold-300 font-medium text-sm transition-colors block mt-0.5"
+                    >
+                      {siteConfig.contact.email}
+                    </a>
+                  </div>
+                </div>
+
+                {siteConfig.contact.phone && (
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
+                      <Phone className="w-5 h-5" />
                     </div>
+                    <div>
+                      <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Phone & WhatsApp</div>
+                      <a 
+                        href={`tel:${siteConfig.contact.phoneRaw || siteConfig.contact.phone}`}
+                        className="text-ivory-100 hover:text-gold-300 font-medium text-sm transition-colors block mt-0.5"
+                      >
+                        {siteConfig.contact.phone}
+                      </a>
+                      {siteConfig.contact.whatsappNumber && (
+                        <a
+                          href={`https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(siteConfig.contact.whatsappMessage || '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-emerald-400 hover:text-emerald-300 font-medium inline-flex items-center gap-1 mt-1 transition-colors"
+                        >
+                          <span>Direct WhatsApp Chat</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Country of Operations</div>
+                    <p className="text-ivory-100 text-sm mt-0.5 font-medium">
+                      India
+                    </p>
+                    <p className="text-[11px] text-ivory-200/70 mt-0.5">
+                      (Physical registered office credentials provided upon verified trade onboarding)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0 border border-gold-500/20">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Operating Time Zone</div>
+                    <p className="text-ivory-100 text-sm mt-0.5 font-medium">
+                      Indian Standard Time (IST, UTC +5:30)
+                    </p>
+                    <p className="text-[11px] text-ivory-200/70 mt-0.5">
+                      Monday to Friday: Trade coordination and email inquiries
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              <div className="pt-4 border-t border-forest-800">
+                <div className="p-4 rounded-xl bg-forest-800/80 border border-forest-700 text-xs text-ivory-200/85 space-y-1">
+                  <div className="font-semibold text-gold-400">Direct Inquiries:</div>
+                  <p>
+                    We review all incoming inquiries to assess requirement feasibility and align with suitable Indian suppliers.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Column 2: Contact Form (Span 7) */}
+          <div className="lg:col-span-7 bg-white rounded-3xl border border-ivory-200 p-8 sm:p-12 shadow-card">
+            
+            <div className="mb-8 space-y-2">
+              <h3 className="text-2xl font-extrabold text-forest-800 font-display">
+                Send a Message
+              </h3>
+              <p className="text-sm text-charcoal-600 leading-relaxed">
+                Please provide your contact details and message below. We review and respond to business inquiries promptly.
+              </p>
+            </div>
+
+            {/* Success State */}
+            {status === 'success' ? (
+              <div className="p-8 sm:p-10 rounded-2xl bg-forest-50/70 border border-forest-200 text-center space-y-4">
+                <div className="w-14 h-14 rounded-full bg-forest-800 text-gold-400 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h4 className="text-2xl font-bold text-forest-800 font-display">
+                  Message Sent
+                </h4>
+                <p className="text-sm text-charcoal-700 max-w-md mx-auto leading-relaxed">
+                  Thank you, <strong>{formData.fullName}</strong>. Your message on behalf of <strong>{formData.companyName}</strong> has been transmitted to CR Global.
+                </p>
+                <div className="pt-3">
+                  <Button onClick={() => setStatus('idle')} variant="secondary">
+                    <span>Send Another Message</span>
+                  </Button>
+                </div>
+              </div>
+            ) : status === 'setup_required' ? (
+              /* Setup / Email Fallback State (Never Fakes Delivery) */
+              <div className="p-7 rounded-2xl bg-ivory-50 border border-gold-500/40 space-y-5">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-forest-800 text-gold-400 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-forest-800 font-display">
+                      Direct Email Delivery Ready
+                    </h4>
+                    <p className="text-xs sm:text-sm text-charcoal-600 mt-1 leading-relaxed">
+                      Automated server forwarding is awaiting host activation. You can transmit your inquiry immediately to our verified corporate inbox.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white border border-ivory-200 text-xs text-charcoal-700 space-y-1">
+                  <div><strong>From:</strong> {formData.fullName} ({formData.companyName})</div>
+                  <div><strong>Email:</strong> {formData.email}</div>
+                  <div><strong>Subject:</strong> {formData.subject}</div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+                  <a
+                    href={generateMailtoLink()}
+                    className="inline-flex items-center justify-center font-semibold rounded-lg bg-forest-800 hover:bg-forest-900 text-ivory-100 text-xs sm:text-sm px-5 py-3 gap-2 shadow-sm transition-all"
+                  >
+                    <Mail className="w-4 h-4 text-gold-400" />
+                    <span>Open Pre-filled Email</span>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => setStatus('idle')}
+                    className="px-4 py-2.5 text-xs font-semibold rounded-lg text-charcoal-600 hover:text-forest-800 transition-colors"
+                  >
+                    Back to Form
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                
+                {/* Honeypot field */}
+                <div className="hidden" aria-hidden="true">
+                  <label>Website URL</label>
+                  <input
+                    type="text"
+                    name="website_url"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website_url}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      placeholder="e.g. David Miller"
+                      className={`w-full text-sm px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 ${
+                        errors.fullName ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                      }`}
+                    />
+                    {errors.fullName && (
+                      <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                      Company Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="companyName"
+                      value={formData.companyName}
+                      onChange={handleChange}
+                      placeholder="e.g. Miller Bio Supplies"
+                      className={`w-full text-sm px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 ${
+                        errors.companyName ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                      }`}
+                    />
+                    {errors.companyName && (
+                      <p className="text-xs text-red-600 mt-1">{errors.companyName}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="name@company.com"
+                      className={`w-full text-sm px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 ${
+                        errors.email ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                      }`}
+                    />
+                    {errors.email && (
+                      <p className="text-xs text-red-600 mt-1">{errors.email}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                      Country *
+                    </label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                      placeholder="e.g. United Kingdom, UAE"
+                      className={`w-full text-sm px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 ${
+                        errors.country ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                      }`}
+                    />
+                    {errors.country && (
+                      <p className="text-xs text-red-600 mt-1">{errors.country}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                    Subject *
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="e.g. Vermicompost sourcing inquiry or general trade question"
+                    className={`w-full text-sm px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 ${
+                      errors.subject ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                    }`}
+                  />
+                  {errors.subject && (
+                    <p className="text-xs text-red-600 mt-1">{errors.subject}</p>
                   )}
                 </div>
-              );
-            })}
+
+                <div>
+                  <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
+                    Message *
+                  </label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Provide details about your requirements or partnership interest..."
+                    className={`w-full text-sm p-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-forest-800 text-charcoal-800 resize-none ${
+                      errors.message ? 'border-red-400 bg-red-50/20' : 'border-ivory-300'
+                    }`}
+                  />
+                  {errors.message && (
+                    <p className="text-xs text-red-600 mt-1">{errors.message}</p>
+                  )}
+                </div>
+
+                {/* Privacy Consent Checkbox */}
+                <div className="space-y-2">
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="privacyConsent"
+                      name="privacyConsent"
+                      checked={formData.privacyConsent}
+                      onChange={handleChange}
+                      className="w-4 h-4 mt-0.5 rounded border-ivory-400 text-forest-800 focus:ring-forest-800 cursor-pointer"
+                    />
+                    <label htmlFor="privacyConsent" className="text-xs text-charcoal-600 cursor-pointer leading-relaxed">
+                      I consent to CR Global processing my contact information to respond to this business enquiry. *
+                    </label>
+                  </div>
+                  {errors.privacyConsent && (
+                    <p className="text-xs text-red-600">{errors.privacyConsent}</p>
+                  )}
+                </div>
+
+                {errorMessage && (
+                  <div className="p-4 rounded-xl bg-red-50 text-red-700 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="inline-flex items-center justify-center font-bold rounded-lg bg-forest-800 hover:bg-forest-900 text-ivory-100 text-base px-8 py-3.5 gap-2.5 shadow-md hover:shadow-lg transition-all disabled:opacity-60 cursor-pointer w-full sm:w-auto"
+                  >
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>Sending Message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Message</span>
+                        <Send className="w-4 h-4 text-gold-400" />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+              </form>
+            )}
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* FINAL SECTION: CREATING ENDURING VALUE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-forest-900 text-ivory-100 p-8 sm:p-14 text-center border border-forest-800 shadow-card relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-gold-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-forest-700/20 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative max-w-2xl mx-auto space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest-800 text-gold-400 text-xs font-bold uppercase tracking-wider border border-gold-500/30">
+              <ShieldCheck className="w-3.5 h-3.5 text-gold-500" />
+              <span>Our Commitment</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
+              Creating Enduring Value Through Long-Term Partnerships
+            </h2>
+
+            <p className="text-sm sm:text-base text-ivory-200/90 leading-relaxed font-normal">
+              At CR Global, we believe sustainable business is built on transparent communication, thorough requirement analysis, and reliable execution. We look forward to exploring how our Indian sourcing coordination can support your business goals.
+            </p>
+
+            <div className="pt-2">
+              <Button to="/export-enquiries" variant="gold" size="lg" className="shadow-md">
+                <span>Request a Bulk Quote</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
           </div>
         </div>
+      </section>
 
-      </div>
     </div>
   );
 }

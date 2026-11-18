@@ -7,52 +7,63 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          50: '#f0f5ff',
-          100: '#e0ebff',
-          200: '#c7d9fe',
-          300: '#9dbefc',
-          400: '#6b98f8',
-          500: '#3b71f3',
-          600: '#2554e8',
-          700: '#1d40d4',
-          800: '#1e3a8a',
-          900: '#0f172a',
-          950: '#090d16',
+        forest: {
+          50: '#f2f7f4',
+          100: '#e1ede7',
+          200: '#c5ddd1',
+          300: '#9ec4b3',
+          400: '#6fa48f',
+          500: '#4c8670',
+          600: '#386a57',
+          700: '#2c5344',
+          800: '#183D30', // Primary Forest Green
+          900: '#133026',
+          950: '#0a1a15',
         },
-        amber: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
+        ivory: {
+          50: '#fdfcf9',
+          100: '#F4F1E8', // Warm Ivory
+          200: '#eae3d3',
+          300: '#ded2b8',
+          400: '#ccb893',
+          500: '#be9f70',
         },
-        emerald: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+        gold: {
+          50: '#faf7ee',
+          100: '#f3eed8',
+          200: '#e6dab0',
+          300: '#d7c183',
+          400: '#caa85b',
+          500: '#B58B52', // Earth Gold
+          600: '#a37743',
+          700: '#835a35',
+          800: '#6d4930',
+          900: '#5c3e2b',
+        },
+        charcoal: {
+          50: '#f6f7f6',
+          100: '#e3e5e3',
+          200: '#c5c9c5',
+          300: '#9ea59f',
+          400: '#757e77',
+          500: '#5b645d',
+          600: '#464e48',
+          700: '#383e3a',
+          800: '#1F2421', // Dark Charcoal
+          900: '#161a18',
+          950: '#0e1110',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
         display: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
       },
       boxShadow: {
-        'card': '0 4px 20px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04)',
-        'card-hover': '0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.06)'
+        'subtle': '0 2px 10px rgba(24, 61, 48, 0.04)',
+        'card': '0 4px 20px -2px rgba(24, 61, 48, 0.06), 0 2px 6px -2px rgba(24, 61, 48, 0.03)',
+        'card-hover': '0 20px 25px -5px rgba(24, 61, 48, 0.1), 0 8px 10px -6px rgba(24, 61, 48, 0.04)',
+        'gold-glow': '0 0 25px rgba(181, 139, 82, 0.25)',
       }
     },
   },

@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Ensures relative assets work on Hostinger subdirectories or root
+  base: '/', // Absolute root path for multi-depth SPA routing on crglobalindia.com
   server: {
     port: 3000,
     open: true

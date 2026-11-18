@@ -26,3 +26,6 @@ dist-ssr
 # Environment Variables
 .env
 .env.production
+
+# Build Archives
+*.zip

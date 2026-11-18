@@ -1,204 +1,354 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
-import { ShieldCheck, Target, Eye, Award, CheckCircle2, Building, Cpu, Truck, ArrowRight, FileCheck } from 'lucide-react';
-import { siteConfig } from '../data/siteConfig';
+import Button from '../components/common/Button';
+import { 
+  Sprout, 
+  Compass, 
+  Target, 
+  ShieldCheck, 
+  SearchCheck, 
+  Scale, 
+  Handshake, 
+  TrendingUp, 
+  ClipboardList, 
+  Search, 
+  Layers, 
+  FileCheck2, 
+  Users, 
+  ArrowRight,
+  Sparkles
+} from 'lucide-react';
+import SEO from '../components/common/SEO';
 
-export default function AboutPage({ setActivePage, onOpenRFQ }) {
-  const values = [
+export default function AboutPage() {
+  // Page-specific SEO metadata
+  useEffect(() => {
+    document.title = "About CR Global | Creating Enduring Value Through Responsible Global Trade";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        "content",
+        "Learn about CR Global, an India-based B2B sourcing and international trade company focused on vermicompost, organic fertilizers, and responsible trade partnerships."
+      );
+    }
+  }, []);
+
+  const coreValues = [
     {
-      title: "Sanctity of Export Contracts",
-      desc: "In cross-border commodity trade, trust is established by honoring agreed price contracts irrespective of domestic market price spikes."
+      title: "Integrity",
+      description: "Honest communication about capabilities and commitments.",
+      icon: ShieldCheck
     },
     {
-      title: "Verifiable Lab Purity",
-      desc: "Every container lot is tested for pesticide MRLs, aflatoxins, and microbiological purity through independent testing agencies (SGS / Geo-Chem)."
+      title: "Quality Focus",
+      description: "Attention to product specifications and buyer expectations.",
+      icon: SearchCheck
     },
     {
-      title: "On-Time Ocean Despatch",
-      desc: "Operating within 45 km of Mundra Port guarantees priority container stuffing, rapid customs sealing, and seamless vessel sailings."
+      title: "Transparency",
+      description: "Clarity around sourcing, quantities, timelines and terms.",
+      icon: Scale
     },
     {
-      title: "Transparent B2B Communication",
-      desc: "Direct communication with commercial export directors, real-time photographic container stuffing reports, and swift documentation dispatch."
+      title: "Partnership",
+      description: "Relationships based on mutual understanding and long-term value.",
+      icon: Handshake
+    },
+    {
+      title: "Continuous Improvement",
+      description: "Strengthening sourcing knowledge and business processes.",
+      icon: TrendingUp
+    }
+  ];
+
+  const businessSteps = [
+    {
+      step: "01",
+      title: "Requirement Review",
+      description: "We begin by conducting a comprehensive review of buyer specifications, required volumes, packaging formats, and destination market requirements.",
+      icon: ClipboardList
+    },
+    {
+      step: "02",
+      title: "Sourcing Evaluation",
+      description: "We evaluate potential Indian suppliers against target parameters, screening for consistency, availability, and alignment with buyer standards.",
+      icon: Search
+    },
+    {
+      step: "03",
+      title: "Product Information Coordination",
+      description: "We coordinate accurate product details, physical characteristics, sieve gradings, and packaging specifications with full transparency.",
+      icon: Layers
+    },
+    {
+      step: "04",
+      title: "Commercial Discussion",
+      description: "We facilitate structured trade conversations with clear FOB or CIF pricing, practical transit schedules, and documented milestones.",
+      icon: FileCheck2
+    },
+    {
+      step: "05",
+      title: "Long-Term Relationship Building",
+      description: "We prioritize repeat reliability, dependable service, and commercial trust over short-term transactions to create enduring value.",
+      icon: Users
     }
   ];
 
   return (
-    <div className="bg-white">
-      {/* Page Header */}
+    <div className="space-y-16 sm:space-y-24 pb-20">
+      <SEO 
+        title="About CR Global | Creating Enduring Value Through Responsible Global Trade"
+        description="Learn about CR Global, an India-based B2B sourcing and international trade company focused on vermicompost, organic fertilizers, and responsible trade partnerships."
+        canonicalPath="/about"
+      />
+      
+      {/* PAGE HEADER */}
       <PageHeader
-        title="About CR Global: Indian Agricultural Excellence"
-        subtitle="Bridging India's premier farming belts with international food importers, spice millers, and institutional buyers across 35+ countries."
+        title="About CR Global"
+        subtitle="Creating Enduring Value Through Responsible Global Trade"
         breadcrumb="About Us"
-        onNavHome={() => setActivePage('home')}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 space-y-20">
-        
-        {/* Company Narrative & Origin Story */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* INTRODUCTION SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-800 text-xs font-bold font-mono uppercase tracking-wider">
-              <Building className="w-3.5 h-3.5" />
-              <span>ESTABLISHED IN {siteConfig.company.establishedYear} • GUJARAT, INDIA</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ivory-100 text-forest-800 text-xs font-bold uppercase tracking-wider border border-ivory-300">
+              <Sprout className="w-4 h-4 text-gold-600" />
+              <span>Who We Are</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-navy-900 font-display tracking-tight">
-              A Premier Merchant Exporter Driven by Quality, Precision & Integrity
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-forest-800 font-display leading-tight">
+              Facilitating Responsible Agricultural Sourcing from India
             </h2>
 
-            <p className="text-slate-600 text-base leading-relaxed">
-              <strong className="text-navy-900 font-semibold">{siteConfig.company.legalName}</strong> was founded with a singular mission: to eliminate the quality inconsistencies traditionally associated with agricultural commodity trading. Operating from the commercial hub of Ahmedabad and our processing facility in the Mundra/Gandhidham port corridor, we serve as a trusted direct-source supply partner for global distributors.
-            </p>
-
-            <p className="text-slate-600 text-base leading-relaxed">
-              Our direct presence in India's agricultural capital mandis—including Unjha (Cumin, Fennel, Sesame), Saurashtra (Groundnuts, Sesame), Guntur (Red Chilli), and Punjab (Basmati Rice)—allows us to procure newly harvested crops at primary mandi rates, passing substantial value and quality advantages to our international clientele.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="text-2xl font-extrabold text-navy-900 font-display">100%</div>
-                <div className="text-xs text-slate-500 mt-0.5">Customs Compliant Clearances</div>
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <div className="text-2xl font-extrabold text-amber-600 font-display">35+</div>
-                <div className="text-xs text-slate-500 mt-0.5">Global Seaports Served</div>
-              </div>
+            <div className="space-y-4 text-base sm:text-lg text-charcoal-700 leading-relaxed font-normal">
+              <p>
+                CR Global is an India-based B2B sourcing and international trade company focused on connecting buyers with agricultural input sourcing opportunities.
+              </p>
+              <p>
+                Our initial business focus is <strong>vermicompost and organic fertilizers</strong>, supporting the growing interest in sustainable soil management and organic agricultural inputs.
+              </p>
+              <p className="text-sm sm:text-base text-charcoal-600">
+                We approach each business enquiry with an emphasis on understanding requirements, coordinating with potential suppliers, and communicating clearly throughout the sourcing process.
+              </p>
             </div>
           </div>
 
-          <div className="lg:col-span-5 bg-navy-950 text-white rounded-2xl p-8 border border-navy-800 shadow-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-navy-800 pb-4">
-              <h3 className="text-lg font-bold font-display text-white">Statutory Credentials</h3>
-              <ShieldCheck className="w-5 h-5 text-amber-400" />
-            </div>
-
-            <div className="space-y-3.5 text-xs">
-              <div className="flex items-center justify-between py-1 border-b border-navy-900">
-                <span className="text-slate-400">DGFT IEC:</span>
-                <span className="font-mono font-bold text-amber-400">{siteConfig.company.iec}</span>
-              </div>
-              <div className="flex items-center justify-between py-1 border-b border-navy-900">
-                <span className="text-slate-400">APEDA RCMC:</span>
-                <span className="font-mono text-slate-200">{siteConfig.company.apedaReg}</span>
-              </div>
-              <div className="flex items-center justify-between py-1 border-b border-navy-900">
-                <span className="text-slate-400">Spices Board:</span>
-                <span className="font-mono text-slate-200">{siteConfig.company.spicesBoardReg}</span>
-              </div>
-              <div className="flex items-center justify-between py-1 border-b border-navy-900">
-                <span className="text-slate-400">FSSAI Central:</span>
-                <span className="font-mono text-slate-200">{siteConfig.company.fssaiLicense}</span>
-              </div>
-              <div className="flex items-center justify-between py-1 border-b border-navy-900">
-                <span className="text-slate-400">FIEO Registration:</span>
-                <span className="font-mono text-slate-200">{siteConfig.company.fieoMembership}</span>
-              </div>
-              <div className="flex items-center justify-between py-1">
-                <span className="text-slate-400">Corporate CIN:</span>
-                <span className="font-mono text-slate-200">{siteConfig.company.cin}</span>
-              </div>
-            </div>
-
-            <div className="pt-2">
-              <button
-                onClick={() => setActivePage('certifications')}
-                className="w-full bg-navy-800 hover:bg-navy-700 text-slate-200 font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition-colors border border-navy-700"
-              >
-                <span>View Authenticated Certificates</span>
-                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Vision & Mission Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600">
-              <Target className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-extrabold text-navy-900 font-display">
-              Our Vision
-            </h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              To be the most reputable and dependable Indian agricultural merchant export house, recognized worldwide for ethical commodity trading, zero-adulteration standards, and seamless port-to-port ocean logistics.
-            </p>
-          </div>
-
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-4">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
-              <Eye className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-extrabold text-navy-900 font-display">
-              Our Mission
-            </h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              To empower Indian farming communities by providing transparent global market access, while delivering premium Sortex-cleaned, laboratory-verified agri-commodities to overseas importers at competitive, honest FOB and CIF prices.
-            </p>
-          </div>
-
-        </div>
-
-        {/* Core Principles */}
-        <div className="space-y-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="text-amber-600 font-mono text-xs font-bold uppercase tracking-widest mb-1">
-              THE CR GLOBAL STANDARD
-            </div>
-            <h2 className="text-3xl font-extrabold text-navy-900 font-display">
-              Core Principles Guiding Every Container We Ship
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((val, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                <div className="w-9 h-9 rounded-lg bg-navy-50 text-navy-900 flex items-center justify-center font-bold text-sm font-mono">
-                  0{idx + 1}
-                </div>
-                <h4 className="text-base font-bold text-navy-900 font-display">
-                  {val.title}
-                </h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {val.desc}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl overflow-hidden shadow-card border border-ivory-200 group">
+              <img
+                src="/images/about-agriculture.jpg"
+                alt="Sustainable agriculture and organic cultivation in India"
+                className="w-full h-80 sm:h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block mb-1">
+                  Responsible Trade
+                </span>
+                <p className="text-sm text-ivory-100 font-medium">
+                  Connecting overseas buyers with authentic Indian agricultural inputs.
                 </p>
               </div>
-            ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTIONS 1 & 2: VISION & MISSION */}
+      <section className="bg-ivory-100/60 py-16 sm:py-20 border-y border-ivory-200/90">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            
+            {/* Vision Card */}
+            <div className="bg-white rounded-3xl p-8 sm:p-10 border border-ivory-200/90 shadow-card flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-forest-800 text-gold-400 flex items-center justify-center border border-gold-500/20">
+                  <Compass className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gold-600">Strategic Direction</span>
+                  <h3 className="text-2xl font-bold text-forest-800 font-display mt-1">
+                    Our Vision
+                  </h3>
+                </div>
+                <p className="text-base sm:text-lg text-charcoal-700 leading-relaxed font-normal">
+                  To build CR Global into a trusted international trade and sourcing company known for transparency, dependable relationships and enduring business value.
+                </p>
+              </div>
+            </div>
+
+            {/* Mission Card */}
+            <div className="bg-white rounded-3xl p-8 sm:p-10 border border-ivory-200/90 shadow-card flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-forest-800 text-gold-400 flex items-center justify-center border border-gold-500/20">
+                  <Target className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-gold-600">Our Purpose</span>
+                  <h3 className="text-2xl font-bold text-forest-800 font-display mt-1">
+                    Our Mission
+                  </h3>
+                </div>
+                <p className="text-base sm:text-lg text-charcoal-700 leading-relaxed font-normal">
+                  To connect global buyers with sourcing opportunities in India through requirement-driven coordination, responsible business practices and a commitment to long-term partnerships.
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
+      </section>
 
-        {/* CTA Banner */}
-        <div className="bg-navy-950 text-white p-8 sm:p-10 rounded-2xl border border-navy-800 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-              Ready to Establish a Long-Term Commodity Supply Partnership?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-400">
-              Speak directly with our senior commercial export directors.
+      {/* SECTION 3: OUR CORE VALUES */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        
+        <div className="text-center max-w-2xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ivory-100 text-forest-800 text-xs font-bold uppercase tracking-wider border border-ivory-300">
+            <span>Guiding Principles</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-forest-800 font-display">
+            Our Core Values
+          </h2>
+          <p className="text-sm sm:text-base text-charcoal-600 leading-relaxed">
+            The fundamental standards that inform our interactions with international buyers, suppliers, and partners.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+          {coreValues.map((value, idx) => {
+            const IconComp = value.icon;
+            return (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl p-7 border border-ivory-200/90 hover:border-gold-500/40 hover:shadow-card transition-all flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="w-12 h-12 rounded-xl bg-forest-800 text-gold-500 flex items-center justify-center">
+                    <IconComp className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-forest-800 font-display">
+                      {value.title}
+                    </h3>
+                    <p className="text-sm text-charcoal-600 mt-2 leading-relaxed">
+                      {value.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      </section>
+
+      {/* SECTION 4: OUR BUSINESS APPROACH */}
+      <section className="bg-forest-900 text-ivory-100 py-20 border-y border-forest-800 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(181,139,82,0.15),transparent_60%)] pointer-events-none" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest-800 text-gold-400 text-xs font-bold uppercase tracking-wider border border-gold-500/30">
+              <span>Methodology</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-display">
+              Our Business Approach
+            </h2>
+            <p className="text-sm sm:text-base text-ivory-200/80 leading-relaxed">
+              A structured, step-by-step methodology to ensure every sourcing discussion is grounded in realistic capabilities and transparent execution.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              onClick={onOpenRFQ}
-              className="bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold px-6 py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md"
-            >
-              Request Commercial RFQ
-            </button>
-            <button
-              onClick={() => setActivePage('products')}
-              className="bg-navy-800 hover:bg-navy-700 text-white font-semibold px-5 py-3 rounded-xl text-xs sm:text-sm transition-all border border-navy-700"
-            >
-              Explore Products
-            </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {businessSteps.map((step, idx) => {
+              const IconComp = step.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-forest-800/80 rounded-2xl p-6 border border-forest-700/80 hover:border-gold-500/40 transition-all flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="w-10 h-10 rounded-xl bg-forest-900 text-gold-400 flex items-center justify-center border border-gold-500/20">
+                        <IconComp className="w-5 h-5" />
+                      </div>
+                      <span className="font-mono text-xs font-bold text-gold-500/80">
+                        {step.step}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-bold text-white font-display">
+                      {step.title}
+                    </h3>
+
+                    <p className="text-xs text-ivory-200/80 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 5: LOOKING AHEAD */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-ivory-100/60 rounded-3xl border border-ivory-200/90 p-8 sm:p-12 lg:p-14 shadow-subtle">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-forest-800 text-gold-400 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-gold-500" />
+              <span>Future Growth</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-forest-800 font-display">
+              Looking Ahead
+            </h2>
+
+            <p className="text-sm sm:text-base text-charcoal-700 leading-relaxed">
+              While our current trade focus remains squarely on vermicompost and organic fertilizers, CR Global may evaluate additional agricultural and sustainable product categories as our business relationships and trade network grow.
+            </p>
+
+            <p className="text-xs sm:text-sm text-charcoal-600 leading-relaxed">
+              Any future product additions will be approached with the same dedication to requirement review, responsible coordination, and thorough verification before being offered to global buyers.
+            </p>
           </div>
         </div>
+      </section>
 
-      </div>
+      {/* FINAL CTA SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-forest-900 text-ivory-100 p-8 sm:p-14 text-center border border-forest-800 shadow-card relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-gold-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-forest-700/20 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative max-w-2xl mx-auto space-y-6">
+            <h2 className="text-3xl sm:text-4xl font-extrabold font-display text-white">
+              Let's Build a Long-Term Partnership
+            </h2>
+
+            <p className="text-sm sm:text-base text-ivory-200/90 leading-relaxed">
+              Whether you are exploring bulk vermicompost sourcing or looking to establish an ongoing supply dialogue in India, we welcome the opportunity to connect.
+            </p>
+
+            <div className="pt-2">
+              <Button to="/contact" variant="gold" size="lg" className="shadow-md">
+                <span>Connect With CR Global</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

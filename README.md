@@ -1,36 +1,57 @@
-# CR Global - Indian & Global EXIM Commercial Web Platform
+# CR Global — Official Web Platform (V2)
 
-![CR Global EXIM](public/favicon.svg)
+![CR Global](public/favicon.svg)
 
-> **Commercial Client-Handover Ready**: A high-performance, responsive, zero-maintenance static web portal built for **CR Global** (Indian & Global Import-Export Merchant & Manufacturer House), modeled after established Indian EXIM portals (**Kankas Exports**, **Uma Exports**, **Ashadhan Exim**, and **Jesvil Co**).
-
----
-
-## 🌟 Key Features
-
-- **Structural Flow & Trust Signals**:
-  - **Top Utility Bar**: Displays IEC registration, APEDA accreditation, official email, phone, and a live Indian Standard Time (IST) clock for international buyers.
-  - **Sticky Navbar & Mobile Drawer**: Clean navigation, active page highlighting, and a high-visibility "Request Quote" CTA.
-  - **Hero Slider**: Dynamic value propositions for Whole Spices, Basmati Rice, and Mundra/JNPT Maritime Container Logistics.
-  - **Verifiable Metrics Strip**: 35+ Export Destinations, 48,000+ Metric Tons, 14+ Years in Cross-Border Trade, 99.5% Sortex Cleaned.
-  - **Direct Mandi Sourcing**: Interactive breakdown of procurement belts (Unjha, Saurashtra, Guntur, Indo-Gangetic basin).
-  - **Interactive FCL Container Stuffing Calculator**: Allows foreign buyers to calculate exact net tonnage, bag count (25kg, 50kg, 1000kg Jumbo), and container space (20ft vs 40ft FCL) for each commodity.
-  - **Statutory Accreditations Marquee**: DGFT IEC, APEDA, Spices Board of India, FSSAI Central License, FIEO, ISO 22000:2018, Halal, Kosher, and US FDA facility registration.
-  - **Global Logistics Map**: Interactive export destinations (GCC, Europe, SE Asia, Americas, Africa) with gateway port transit times.
-  - **Deep B2B Product Detail Modals**: Full chemical/physical lab parameter tables (Moisture, Volatile Oil, Curcumin, Aflatoxin MRLs, Sieve size) and container stuffing ratios.
-  - **Floating WhatsApp Quick-Chat Widget**: Instant connection to the commercial export desk with pre-filled inquiries.
-  - **Serverless RFQ Engine**: Built for Web3Forms or Formspree with instant WhatsApp and direct email fallbacks.
-  - **Zero Server-Side Dependency**: Compiles into pure static HTML/CSS/JS (`dist/`), deploying effortlessly on Hostinger, Cloudflare Pages, Netlify, or AWS S3.
+> **CR Global**: India-Based B2B Sourcing & International Trade  
+> **Tagline**: Creating Enduring Value  
+> **Official Domain**: [https://crglobalindia.com/](https://crglobalindia.com/)  
+> **Release Branch**: `V2` (Production-Ready Architecture)  
+> **Primary Business**: Facilitating international trade discussions and bulk sourcing of high-grade Indian vermicompost and organic fertilizers for global commercial agricultural and horticultural buyers.
 
 ---
 
-## 🏗 Tech Stack
+## 🚀 What's New in Version 2.0 (V2)
 
-- **Framework**: [React 18](https://react.dev/) + [Vite 5](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS 3](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Fonts**: Google Fonts (*Plus Jakarta Sans*, *Inter*, *JetBrains Mono*)
-- **Forms**: Serverless Web3Forms / Formspree API + WhatsApp Deep-Link
+| Feature / Area | Version 1.0 (Initial Prototype) | Version 2.0 (Current Production Release) |
+| :--- | :--- | :--- |
+| **Business Positioning** | Broad multi-commodity export merchant portal (spices, rice, oilseeds) | Focused, verified B2B sourcing platform for Indian Vermicompost & organic inputs |
+| **Routing & Architecture** | Single-page scroll layout | Multi-page SPA with **React Router 7** across 6 canonical routes |
+| **Brand Identity & Theme** | Generic maritime blue/navy theme | Refined organic trade palette: Deep Forest Green (`#183D30`), Warm Ivory (`#F4F1E8`), and Earth Gold (`#B58B52`) |
+| **Inquiry Backend** | Static frontend form without mail delivery | Production PHP mailer (`public/api/send-enquiry.php`) with rate limiting, honeypot spam protection, and sanitization |
+| **SEO & Social Sharing** | Basic meta tags | Dynamic `<SEO>` head manager, 1200x630 Open Graph preview (`og-image.jpg`), canonical XML sitemap, and JSON-LD structured data |
+| **Hosting & Web Server** | Generic static hosting guide | Optimized for **Hostinger Apache + PHP** with automated SPA `.htaccess` rewrite rules and caching directives |
+
+---
+
+## 🌟 Architecture & Implemented Routes
+
+This modern React single-page application (SPA) is built with **React 18**, **Vite 5**, **Tailwind CSS 3**, and **React Router 7**. It is optimized for zero-overhead static deployment on **Hostinger shared hosting (Apache + PHP)**.
+
+### Implemented Pages (6 Canonical Routes)
+1. **`/` (Homepage)**: Executive introduction, hero section with background imagery, flagship vermicompost overview, 4 core value pillars, 6 target B2B buyer sectors, and primary export quotation CTAs.
+2. **`/about` (About Us)**: Company narrative, Vision, Mission, 5 Core Values (Integrity, Quality Focus, Dependability, Transparency, Long-Term Value), 5-stage Business Approach, and forward outlook.
+3. **`/products` (Product Portfolio)**: Overview of export-ready organic agricultural inputs, featured vermicompost card, sourcing facilitation details, and future portfolio expansion preview.
+4. **`/products/vermicompost` (Vermicompost Product Detail)**: Comprehensive B2B specifications, biological decomposition description, applications (agriculture, horticulture, soil conditioning, nurseries), realistic laboratory specification table, bulk packaging options (50kg HDPE, 1000kg Jumbo bags), trade documentation overview, buyer specification checklist, interactive FAQ accordion, and Schema.org `Product` JSON-LD structured data.
+5. **`/export-enquiries` (Export Enquiries & RFQ)**: Transparent 4-stage sourcing process (Share Requirements, Requirement Review, Commercial Discussion, Order Coordination) and a comprehensive B2B RFQ form with validation, honeypot spam protection, rate limiting, and PHP mailer dispatch.
+6. **`/contact` (Contact Us)**: Transparent B2B communication hub, verified contact options, validated contact enquiry form with rate-limiting and honeypot protection, verified company email (`export@crglobalindia.com`), and clear corporate disclosure.
+
+> [!NOTE]
+> **Strict Route Compliance**: As required by brand specifications, there is **NO** `/quality-sourcing` page anywhere on this website. Quality and sourcing methodologies are directly integrated into our product specifications, export enquiry workflows, and corporate values.
+
+---
+
+## 🏗 Tech Stack & Design System
+
+- **Framework**: React 18.3 + Vite 5.4
+- **Routing**: React Router 7 (`BrowserRouter` with `.htaccess` Apache rewrite fallback)
+- **Styling**: Tailwind CSS 3.4
+  - Primary Forest Green: `#183D30` (`forest-800` / `forest-950`)
+  - Warm Ivory: `#F4F1E8` (`ivory-100` / `ivory-50`)
+  - Earth Gold: `#B58B52` (`gold-500` / `gold-400`)
+  - Dark Charcoal: `#1F2421` (`charcoal-800`)
+- **Icons**: Lucide React
+- **Forms & Backend**: `public/api/send-enquiry.php` (PHP mailer script tailored for Hostinger shared hosting mail servers) with client-side mailto fallback for offline/local development.
+- **SEO & Structured Data**: Dynamic `<SEO>` component for page-specific titles, meta descriptions, canonical URLs, and Open Graph tags; Schema.org `Organization` markup on `index.html` and `Product` markup on `/products/vermicompost`.
 
 ---
 
@@ -38,223 +59,169 @@
 
 ```
 CR Global/
-├── .env.example                # Template for environment keys
-├── .gitignore                  # Git exclusions for node_modules and builds
-├── .htaccess                   # Hostinger Apache rewrite & caching rules
-├── index.html                  # SEO tags, OpenGraph, JSON-LD schema
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-├── vite.config.js
-├── public/
-│   ├── .htaccess               # Copied to dist/ for Hostinger
-│   ├── favicon.svg             # Custom SVG trade emblem
-│   ├── robots.txt              # Search engine crawler permissions
-│   └── sitemap.xml             # Complete XML sitemap
-└── src/
-    ├── main.jsx                # React root mount
-    ├── App.jsx                 # Routing & state management
-    ├── index.css               # Tailwind directives & marquee animations
-    ├── data/
-    │   ├── siteConfig.js       # Centralized business info, contacts, registrations
-    │   └── products.js         # Complete export product catalog & specifications
-    ├── components/
-    │   ├── layout/
-    │   │   ├── TopUtilityBar.jsx
-    │   │   ├── Navbar.jsx
-    │   │   ├── Footer.jsx
-    │   │   └── FloatingWhatsApp.jsx
-    │   ├── home/
-    │   │   ├── HeroSlider.jsx
-    │   │   ├── MetricsStrip.jsx
-    │   │   ├── CompanyOverview.jsx
-    │   │   ├── FeaturedCategories.jsx
-    │   │   ├── ProcessingPipeline.jsx
-    │   │   ├── CertificationsMarquee.jsx
-    │   │   ├── GlobalPresenceMap.jsx
-    │   │   └── QuickInquiryBanner.jsx
-    │   ├── products/
-    │   │   ├── ProductCard.jsx
-    │   │   ├── ProductDetailModal.jsx
-    │   │   ├── CategoryFilter.jsx
-    │   │   └── ContainerCalculator.jsx
-    │   ├── rfq/
-    │   │   ├── RFQModal.jsx
-    │   │   └── RFQForm.jsx
-    │   └── common/
-    │       └── PageHeader.jsx
-    └── pages/
-        ├── HomePage.jsx
-        ├── AboutPage.jsx
-        ├── ProductsPage.jsx
-        ├── CertificationsPage.jsx
-        ├── InfrastructurePage.jsx
-        └── ContactPage.jsx
+├── dist/                          # Production-ready build artifacts for Hostinger
+│   ├── index.html                 # Main SPA entry point
+│   ├── .htaccess                  # Apache mod_rewrite SPA routing & caching rules
+│   ├── sitemap.xml                # Canonical XML sitemap for search engines
+│   ├── robots.txt                 # Search engine directives pointing to sitemap
+│   ├── favicon.svg                # Branded vector favicon
+│   ├── images/
+│   │   ├── og-image.jpg           # 1200x630 Branded Open Graph sharing preview
+│   │   ├── hero-vermicompost.jpg  # Hero banner imagery
+│   │   ├── vermicompost-detail.jpg # Product detail showcase image
+│   │   └── about-agriculture.jpg  # About page narrative image
+│   ├── api/
+│   │   └── send-enquiry.php       # Server-side enquiry mailer for Hostinger
+│   └── assets/                    # Optimized JS and CSS bundles
+├── public/                        # Static assets copied directly to dist/ on build
+│   ├── .htaccess
+│   ├── sitemap.xml
+│   ├── robots.txt
+│   ├── favicon.svg
+│   ├── images/
+│   └── api/
+├── src/
+│   ├── App.jsx                    # Route provider (6 canonical routes)
+│   ├── main.jsx                   # React mounting script
+│   ├── index.css                  # Tailwind styles and custom utilities
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.jsx         # Accessible primary & secondary buttons
+│   │   │   ├── PageHeader.jsx     # Consistent page banner component
+│   │   │   ├── ScrollToTop.jsx    # Viewport reset on route navigation
+│   │   │   └── SEO.jsx            # Dynamic document title, canonical & OG manager
+│   │   └── layout/
+│   │       ├── Navbar.jsx         # Responsive top navigation with mobile drawer
+│   │       ├── Footer.jsx         # Accessible footer with verified links & disclaimer
+│   │       ├── FloatingWhatsApp.jsx # Verified WhatsApp widget (conditionally shown)
+│   │       └── Layout.jsx         # Shell wrapper
+│   ├── data/
+│   │   └── siteConfig.js          # Centralized configuration with verified details
+│   └── pages/
+│       ├── HomePage.jsx
+│       ├── AboutPage.jsx
+│       ├── ProductsPage.jsx
+│       ├── VermicompostPage.jsx
+│       ├── ExportEnquiriesPage.jsx
+│       └── ContactPage.jsx
+├── .env.example                   # Environment configuration template
+├── package.json                   # Project scripts and dependencies
+├── tailwind.config.js             # Tailwind theme & color extension
+└── vite.config.js                 # Vite build setup
 ```
 
 ---
 
-## ⚡ Quick Start & Local Development
+## ⚡ Local Development
 
 ### 1. Prerequisites
 - **Node.js**: v18.0.0 or higher
 - **npm**: v9.0.0 or higher
 
-### 2. Install Dependencies
+### 2. Installation
 ```bash
 npm install
 ```
 
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Edit `.env` with your client details:
-```env
-# Free Web3Forms Access Key (https://web3forms.com)
-VITE_WEB3FORMS_ACCESS_KEY=your_access_key_here
-
-# WhatsApp Business number with country code (no + or spaces)
-VITE_WHATSAPP_NUMBER=919876543210
-
-# Inquiry email address
-VITE_INQUIRY_EMAIL=exports@crglobalexim.com
-```
-
-### 4. Run Development Server
+### 3. Run Dev Server
 ```bash
 npm run dev
 ```
-Open `http://localhost:3000` in your browser.
+Open `http://localhost:3000` in your web browser.
 
-### 5. Build for Production
+### 4. Build for Production
 ```bash
 npm run build
 ```
-The compiled, production-ready static bundle will be generated in `dist/`.
+The compiled, production-ready static bundle will be generated into the `dist/` directory.
 
 ---
 
-## 🛠 Client Handover Customization Guide
+## 🌐 Hostinger Shared Hosting Deployment Guide
 
-The codebase is engineered so non-developers or agency staff can rebrand and customize the entire platform in minutes by editing just two central files:
+### Deployment Overview
+- **Hosting Environment**: Hostinger Shared / Cloud Hosting (Linux Apache with PHP 8.0+)
+- **Target Document Root**: `public_html/`
+- **Deployment Archive**: `crglobal-hostinger-deploy.zip`
 
-### 1. Customize Business & Contact Info (`src/data/siteConfig.js`)
-Open `src/data/siteConfig.js` to modify:
-- **Company Credentials**: Legal Name, Tagline, Established Year, IEC Number, GSTIN, CIN, FSSAI License, APEDA RCMC, and Spices Board Registration.
-- **Contact Details**: Phone numbers, WhatsApp number, inquiry emails, Corporate HQ address, and Mundra processing facility address.
-- **Gateway Seaports**: Add or update loading port berths and distances.
-- **Certifications**: Add or update ISO certificates, Halal, Kosher, or US FDA registration numbers.
+### Step-by-Step Upload Instructions via Hostinger File Manager
 
-### 2. Customize Export Products & Specifications (`src/data/products.js`)
-Open `src/data/products.js` to add, edit, or delete commodities. Each product supports:
-- `name`, `botanicalName`, `category` (`spices`, `grains`, `oilseeds`, `pulses`, `specialty`)
-- `hsCode`, `origin`, `purity`, `moisture`, `admixture`
-- `specs`: Custom laboratory parameters (Volatile Oil, Curcumin, Aflatoxin limits, Sieve size)
-- `gradeOptions`: Commercial export grades
-- `fcl20` and `fcl40`: Container stuffing capacities
-- `packaging`: Bag materials and sizes
-- `moq`: Minimum Order Quantity
-
----
-
-## 🚀 GitHub Version Control Workflow
-
-To push this codebase to a GitHub repository:
-
-```bash
-# Initialize git in the project root
-git init
-
-# Add all files
-git add .
-
-# Initial commit
-git commit -m "feat: initial commit of CR Global production EXIM web portal"
-
-# Create a 'main' branch
-git branch -M main
-
-# Link to your GitHub remote repository (replace with your repo URL)
-git remote add origin https://github.com/your-username/cr-global-exim.git
-
-# Push to GitHub
-git push -u origin main
-```
-
----
-
-## 🌐 Hostinger Deployment Guide
-
-Hostinger offers two straightforward methods for deploying this static website:
-
-### Method A: Hostinger Git Deployment (Recommended for Continuous Updates)
-1. Log into your **Hostinger hPanel**.
-2. Navigate to **Websites** -> Select your domain -> Click **Dashboard**.
-3. Under the **Advanced** section, click on **Git**.
-4. Configure Git Repository:
-   - **Repository URL**: `https://github.com/your-username/cr-global-exim.git`
-   - **Branch**: `main`
-   - **Install path**: Leave empty or enter `public_html` (Note: if deploying source, see Build Automation below or deploy pre-built branch).
-5. Alternatively, push the contents of `dist/` to a dedicated `release` or `gh-pages` branch and set the Git deployment target to that branch.
-6. Click **Create** / **Deploy**.
-
----
-
-### Method B: Direct Upload via Hostinger File Manager or FTP (Zero-Config)
-1. Run the local build command:
+1. **Generate the Latest Production Build & Package**:
    ```bash
    npm run build
+   cd dist && zip -r ../crglobal-hostinger-deploy.zip . && cd ..
    ```
-2. Log into **Hostinger hPanel**.
-3. Go to **File Manager** -> Open `public_html/`.
-4. Delete default placeholder files (e.g. `default.php`).
-5. Upload the entire contents of the **`dist/`** folder directly into `public_html/` (including `index.html`, `.htaccess`, `favicon.svg`, `robots.txt`, `sitemap.xml`, and the `assets/` folder).
-6. Verify that `public_html/index.html` exists at the root.
+   *(A pre-packaged `crglobal-hostinger-deploy.zip` is already included in the root directory of this repository).*
+
+2. **Log in to Hostinger hPanel**:
+   - Navigate to [https://hpanel.hostinger.com/](https://hpanel.hostinger.com/).
+   - Select your hosting account for `crglobalindia.com` and click **Manage**.
+
+3. **Open File Manager**:
+   - Under the **Files** section, click on **File Manager** (access files for `crglobalindia.com`).
+   - Navigate into the **`public_html/`** folder.
+
+4. **Prepare Document Root (Backup & Clean)**:
+   - If there are existing default placeholder files (e.g., `default.php`), delete them.
+   - If you are replacing a previous version of the site, select all previous files, click **Zip** or **Download** to create a backup archive (e.g., `backup-previous.zip`), then remove the old files.
+
+5. **Upload & Extract the Deployment ZIP**:
+   - Click the **Upload** icon (top right in File Manager) and choose **File**.
+   - Select `crglobal-hostinger-deploy.zip` from your computer.
+   - Once uploaded, right-click `crglobal-hostinger-deploy.zip` and select **Extract**.
+   - Set the destination path to `public_html` (or `.`) so that files are placed directly in `public_html/`.
+   - Delete `crglobal-hostinger-deploy.zip` after extraction.
+
+6. **Verify Document Root Structure**:
+   Ensure `public_html/` contains the following items directly:
+   - `index.html`
+   - `.htaccess`
+   - `sitemap.xml`
+   - `robots.txt`
+   - `favicon.svg`
+   - `api/` (containing `send-enquiry.php`)
+   - `images/` (containing `og-image.jpg`, `hero-vermicompost.jpg`, etc.)
+   - `assets/` (containing the bundled CSS and JS files)
+
+7. **Verify Server Configuration**:
+   - **PHP Version**: In hPanel, go to **Advanced** -> **PHP Configuration** and ensure PHP 8.1 or 8.2 is active.
+   - **SSL Certificate**: In hPanel, go to **Security** -> **SSL** and ensure Lifetime Free SSL is active for `crglobalindia.com` and `www.crglobalindia.com`. The included `.htaccess` automatically forces HTTPS.
+   - **SPA Routing**: Direct URL visits to `/about`, `/products`, `/products/vermicompost`, `/export-enquiries`, and `/contact` are automatically rewritten to `/index.html` by Apache `mod_rewrite`.
+
+8. **Rollback Procedure**:
+   - If you ever need to roll back to a previous release, simply delete the contents of `public_html/` and extract your `backup-previous.zip` file.
 
 ---
 
-## 🔗 Custom Domain & DNS Mapping on Hostinger
+## 📋 Verified Business Information & Pending Client Items
 
-To point your custom domain (e.g., `crglobalexim.com` or `www.crglobalexim.com`) to Hostinger:
+To ensure high corporate credibility for international trade buyers, this codebase deliberately avoids fictitious registration numbers, artificial export volumes, and placeholder phone numbers.
 
-### 1. If Domain is Registered with Hostinger:
-- The domain will automatically point to your hosting account. Ensure the website root points to `public_html`.
+### Currently Implemented Verified Details:
+- **Company Name**: CR Global
+- **Tagline**: Creating Enduring Value
+- **Canonical Website**: `https://crglobalindia.com/`
+- **Primary Export Desk Email**: `export@crglobalindia.com`
+- **General Inquiries Email**: `info@crglobalindia.com`
+- **Country of Origin & Operations**: India
+- **Core Product Focus**: Indian Vermicompost & Organic Fertilizers
 
-### 2. If Domain is Registered with an External Registrar (GoDaddy, Namecheap, Google Domains):
-Update the DNS records at your registrar:
-
-| Type | Name / Host | Value / Target | TTL |
-| :--- | :--- | :--- | :--- |
-| **A** | `@` | Hostinger Server IP (Found on hPanel Dashboard) | 3600 |
-| **CNAME** | `www` | `@` (or `yourdomain.com`) | 3600 |
-
-*Alternatively, point nameservers to Hostinger:*
-- `ns1.dns-parking.com`
-- `ns2.dns-parking.com`
-
-### 3. Enable Free Lifetime SSL Certificate
-1. In Hostinger hPanel, go to **Security** -> **SSL**.
-2. Click **Install SSL** and select your custom domain.
-3. Once active, the included `.htaccess` file automatically forces HTTPS on all requests.
-
----
-
-## 🔍 SEO & Cross-Border Performance Optimization
-
-- **Pre-configured `.htaccess`**:
-  - Gzip compression enabled for all HTML, CSS, JavaScript, and SVG assets.
-  - Browser caching rules (1 year for images/WebP/SVG, 1 month for JS/CSS).
-  - Clean client-side SPA routing rewrites.
-- **Schema.org Structured Data**:
-  - Pre-injected `Corporation` and `Organization` JSON-LD schema inside `index.html`.
-- **Search Engine Assets**:
-  - Valid `public/robots.txt`
-  - Valid `public/sitemap.xml` with priority mappings.
+### Items Awaiting Client Verification:
+Once officially registered and provided by the business owners, update `src/data/siteConfig.js` and re-run `npm run build`:
+1. **Registered Office Street Address**: City, State, and Postal Code in India.
+2. **Official Business Phone / WhatsApp Number**: With country code (e.g., `+91 ...`). Once provided, the floating WhatsApp desk will automatically display.
+3. **Statutory Registrations** (when issued):
+   - Import Export Code (IEC)
+   - Goods and Services Tax Identification Number (GSTIN)
+   - Corporate Identity Number (CIN) or Udyam Registration
+   - APEDA / Certification bodies (if applicable)
 
 ---
 
-## 📄 License & Commercial Rights
+## 🔒 Security & Performance Features
 
-Developed for **CR Global Export & Import Private Limited**. All commercial rights and source code are transferred to the client upon project handover.
+- **Honeypot Spam Defense**: Forms include hidden honeypot fields that trap automated spam bots without interrupting legitimate users.
+- **Client & Server Rate Limiting**: Both frontend time-stamps and backend session checks prevent rapid-fire automated submissions.
+- **Content Security & Hygiene**: Clean sanitization of form inputs to prevent header injection or XSS.
+- **Static Asset Optimization**: Gzip compression and long-term HTTP browser caching headers configured via `.htaccess`.
+- **Zero Fictional Endorsements**: All claims adhere strictly to realistic vermicompost properties and genuine trade processes.
