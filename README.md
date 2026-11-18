@@ -40,6 +40,49 @@ This modern React single-page application (SPA) is built with **React 18**, **Vi
 
 ---
 
+## 📸 Platform Functionality & Visual Walkthrough
+
+### 1. Homepage & Executive B2B Positioning
+![Homepage Hero](docs/screenshots/01-homepage-hero.png)
+- **Brand Identity**: Features CR Global's corporate emblem, brand tagline *"Creating Enduring Value"*, and verified international trade desk contact options.
+- **Value Proposition**: Clearly communicates primary business focus — facilitating bulk sourcing and trade discussions for high-grade Indian vermicompost.
+- **Action CTAs**: Immediate access to "Request a Bulk Quotation" and "Explore Our Products", alongside a non-intrusive floating WhatsApp desk.
+
+---
+
+### 2. Product Portfolio & Packaging Solutions
+![Products Portfolio](docs/screenshots/05-products-portfolio.png)
+- **Flagship Presentation**: Highlights **Pure Organic Vermicompost** as the primary export line with verified product attributes (screened granules, bio-available NPK, high humic acid content).
+- **Packaging Diversity**: Outlines multi-wall HDPE/PP laminated bags (25kg & 50kg) and 1,000kg FIBC jumbo sacks tailored for ocean container transit (20ft & 40ft FCL).
+- **Roadmap Preview**: Outlines future organic agricultural input expansions without premature commercial commitments.
+
+---
+
+### 3. Laboratory Specifications & Reference Parameters
+![Product Specifications Table](docs/screenshots/02-vermicompost-specifications.png)
+- **Verifiable Technical Parameters**: Displays realistic reference benchmarks for Total Organic Carbon, Nitrogen, Phosphorus, Potassium, Moisture, and pH.
+- **Commercial Grounding**: Clarifies that specific test reports and batch analyses are conducted per supplier allocation and destination regulatory standards.
+- **Zero Inventions**: Strictly avoids fictitious certifications, adhering to standard trade inspection protocols.
+
+---
+
+### 4. 4-Stage International Trade Sourcing Process
+![Sourcing Workflow](docs/screenshots/03-sourcing-workflow.png)
+- **Stage 01 — Share Your Requirements**: Importers submit target specifications, volume, and destination discharge ports.
+- **Stage 02 — Requirement Review**: Trade desk evaluates supplier capacity and documentation feasibility.
+- **Stage 03 — Product & Commercial Discussion**: Transparent negotiations on Incoterms (FOB/CIF), testing protocols, and realistic lead times.
+- **Stage 04 — Order Coordination**: Formal packaging preparation, pre-shipment sampling, and export container dispatch.
+
+---
+
+### 5. Interactive B2B Request for Quotation (RFQ) Form
+![Export RFQ Form](docs/screenshots/04-export-rfq-form.png)
+- **Comprehensive Commercial Intake**: Captures buyer company details, destination ports, Incoterms (FOB/CIF/CFR), container quantities, and testing requirements.
+- **Multi-Layered Security**: Built-in hidden honeypot spam traps, timestamp-based rate limiting, and input sanitization to eliminate automated abuse.
+- **Server-Side PHP Mailer**: Dispatches verified enquiries directly to `export@crglobalindia.com` via Hostinger's mail environment, with client-side fallback.
+
+---
+
 ## 🏗 Tech Stack & Design System
 
 - **Framework**: React 18.3 + Vite 5.4
@@ -73,6 +116,8 @@ CR Global/
 │   ├── api/
 │   │   └── send-enquiry.php       # Server-side enquiry mailer for Hostinger
 │   └── assets/                    # Optimized JS and CSS bundles
+├── docs/                          # Documentation assets
+│   └── screenshots/               # High-resolution platform UI walkthrough captures
 ├── public/                        # Static assets copied directly to dist/ on build
 │   ├── .htaccess
 │   ├── sitemap.xml
