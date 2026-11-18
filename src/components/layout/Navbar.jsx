@@ -49,25 +49,17 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           
           {/* Logo / Brand Name */}
+          {/* Official Company Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3.5 group select-none shrink-0"
+            className="flex items-center select-none shrink-0 py-1"
             aria-label="CR Global - Home"
           >
-            <div className="w-11 h-11 rounded-xl bg-forest-800 flex items-center justify-center text-gold-500 shadow-md group-hover:bg-forest-900 transition-colors shrink-0 border border-gold-500/20">
-              <Sprout className="w-6 h-6 transition-transform group-hover:scale-110" />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-forest-800 font-display">
-                  CR GLOBAL
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-gold-500" />
-              </div>
-              <p className="text-[10px] sm:text-[11px] text-charcoal-500 font-medium tracking-tight">
-                {siteConfig.company.tagline}
-              </p>
-            </div>
+            <img
+              src="/images/cr-global-logo.png"
+              alt="CR Global - Creating Enduring Value"
+              className="h-14 sm:h-16 w-auto object-contain transition-transform duration-200 hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}

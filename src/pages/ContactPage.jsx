@@ -332,12 +332,9 @@ export default function ContactPage() {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Country of Operations</div>
-                    <p className="text-ivory-100 text-sm mt-0.5 font-medium">
-                      India
-                    </p>
-                    <p className="text-[11px] text-ivory-200/70 mt-0.5">
-                      (Physical registered office credentials provided upon verified trade onboarding)
+                    <div className="text-xs text-gold-400 font-semibold uppercase tracking-wider">Registered Office Address</div>
+                    <p className="text-ivory-100 text-sm mt-0.5 font-medium leading-relaxed">
+                      {siteConfig.contact.address}
                     </p>
                   </div>
                 </div>

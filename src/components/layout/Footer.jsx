@@ -23,19 +23,15 @@ export default function Footer() {
           
           {/* Column 1: Brand & Tagline (Span 5) */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-forest-800 border border-gold-500/30 flex items-center justify-center text-gold-500">
-                <Sprout className="w-6 h-6" />
+            <Link to="/" className="inline-block" aria-label="CR Global - Home">
+              <div className="bg-white rounded-2xl p-2.5 inline-flex items-center justify-center shadow-md border border-gold-500/20 hover:opacity-95 transition-opacity">
+                <img
+                  src="/images/cr-global-logo.png"
+                  alt="CR Global - Creating Enduring Value"
+                  className="h-16 sm:h-20 w-auto object-contain"
+                />
               </div>
-              <div>
-                <span className="text-xl font-extrabold text-white tracking-tight font-display">
-                  CR GLOBAL
-                </span>
-                <p className="text-xs text-gold-500 font-medium">
-                  {siteConfig.company.tagline}
-                </p>
-              </div>
-            </div>
+            </Link>
 
             <p className="text-sm text-ivory-200/80 leading-relaxed max-w-md pt-1">
               {siteConfig.company.description}
@@ -122,9 +118,11 @@ export default function Footer() {
                 </div>
               )}
 
-              <div className="flex items-center gap-2.5 text-ivory-200/80 pt-1">
-                <MapPin className="w-4 h-4 text-gold-500 shrink-0" />
-                <span>India Operations & International Trade Desk</span>
+              <div className="flex items-start gap-2.5 text-ivory-200/80 pt-1">
+                <MapPin className="w-4 h-4 text-gold-500 shrink-0 mt-0.5" />
+                <span className="leading-relaxed text-xs">
+                  {siteConfig.contact.address}
+                </span>
               </div>
             </div>
 

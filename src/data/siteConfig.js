@@ -38,7 +38,8 @@ export const siteConfig = {
     phoneRaw: "+919529102748",
     whatsappNumber: "919529102748",
     whatsappDisplay: "+91 95291 02748",
-    location: "India",
+    address: "202, Ghanshyam Villa, Nanivadikar Hospital Gali, Jagdamba Hotel Mahim Road, Palghar, Maharashtra - 401404",
+    location: "Palghar, Maharashtra, India",
     whatsappMessage: "Hello CR Global, I am interested in sourcing vermicompost and organic fertilizers. Please share product specifications and quotation."
   }
 };
